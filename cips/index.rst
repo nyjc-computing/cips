@@ -4,16 +4,16 @@
    contain the root `toctree` directive.
 
 CIP 0 - Index of Campus Improvement Proposals (CIPs)
-==================
+====================================================
 
 Introduction
-==================
+============
 
 This CIP contains the index of all Campus Improvement Proposals, known as CIPs. CIP numbers are assigned by the leaders of Nanyang System Developers, and once assigned are never changed. The version control history of the CIP texts represent their historical record.
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :titlesonly:
    :glob:
    :caption: CIP Table of Contents:

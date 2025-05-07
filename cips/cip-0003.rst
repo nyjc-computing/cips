@@ -1,22 +1,24 @@
-CIP: 2
+CIP: 3
 Title: Yapper: Event-Driven Message Broker
 Author: Ng Jun Siang
 Status: Active
 Created: 07-May-2025
 
-# The problem of communication scaling
+The problem of communication scaling
+====================================
 
-With a microservice architecture and an unknow number of first-party clients, Campus faces a **communication scaling** problem:
+With a microservice architecture and an unknown number of first-party clients, Campus faces a **communication scaling** problem:
 
 - each client potentially modifies data,
 - which other clients want to know about,
-- and will attempt to find out by polling the microservice
+- and will attempt to find out by polling the microservice.
 
-In the worst case, the clients (e.g. discord bots) are also data sources, leading to O(n²) increase in inter-client communication.
+In the worst case, the clients (e.g., discord bots) are also data sources, leading to O(n²) increase in inter-client communication.
 
 In the best case, clients are purely data consumers and microservices are data providers, with clients continually polling the microservices. The total polling frequency sees an O(n) increase in client-microservice communication.
 
-# Yapper: Event-Driven Message Broker
+Yapper: Event-Driven Message Broker
+===================================
 
 To avoid the need for continual polling, **events** are used as a trigger to perform any relevant actions, such as polling for updated data.
 
@@ -24,5 +26,5 @@ Applications that emit events are known as **publishers**, while applications th
 
 Campus will use an **event-driven architecture** for microservices and first-party clients:
 
-- microservices are purely publishers, emitting events for data changes
+- microservices are purely publishers, emitting events for data changes,
 - clients can be publishers and subscribers, emitting events and listening for them.

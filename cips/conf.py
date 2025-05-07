@@ -14,18 +14,16 @@ author = 'Nanyang System Developers'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "myst_parser",  # for markdown support
+
 ]
 
-# Explicitly include .rst and .md files as source files
 source_suffix = {
     '.rst': 'restructuredtext',
-    '.md': 'markdown',
 }
 
 include_patterns = [
     "index.*",
-    "cip-????.md",
+    "cip-????.rst",
 ]
 
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
