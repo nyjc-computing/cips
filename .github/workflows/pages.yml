@@ -27,7 +27,7 @@ jobs:
 
       # Build the documentation
       - name: Build Sphinx documentation
-        run: make html
+        run: poetry run make html
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
