@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The problem of communication scaling &#8212; CIPs  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <p>CIP: 2
+Title: Yapper: Event-Driven Message Broker
+Author: Ng Jun Siang
+Status: Active
+Created: 07-May-2025</p>
+<section id="the-problem-of-communication-scaling">
+<h1>The problem of communication scaling<a class="headerlink" href="#the-problem-of-communication-scaling" title="Link to this heading">¶</a></h1>
+<p>With a microservice architecture and an unknow number of first-party clients, Campus faces a <strong>communication scaling</strong> problem:</p>
+<ul class="simple">
+<li><p>each client potentially modifies data,</p></li>
+<li><p>which other clients want to know about,</p></li>
+<li><p>and will attempt to find out by polling the microservice</p></li>
+</ul>
+<p>In the worst case, the clients (e.g. discord bots) are also data sources, leading to O(n²) increase in inter-client communication.</p>
+<p>In the best case, clients are purely data consumers and microservices are data providers, with clients continually polling the microservices. The total polling frequency sees an O(n) increase in client-microservice communication.</p>
+</section>
+<section id="yapper-event-driven-message-broker">
+<h1>Yapper: Event-Driven Message Broker<a class="headerlink" href="#yapper-event-driven-message-broker" title="Link to this heading">¶</a></h1>
+<p>To avoid the need for continual polling, <strong>events</strong> are used as a trigger to perform any relevant actions, such as polling for updated data.</p>
+<p>Applications that emit events are known as <strong>publishers</strong>, while applications that listen for events are known as <strong>subscribers</strong>.</p>
+<p>Campus will use an <strong>event-driven architecture</strong> for microservices and first-party clients:</p>
+<ul class="simple">
+<li><p>microservices are purely publishers, emitting events for data changes</p></li>
+<li><p>clients can be publishers and subscribers, emitting events and listening for them.</p></li>
+</ul>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">CIPs</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Nanyang System Developers.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/cip-0003.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
