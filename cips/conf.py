@@ -17,13 +17,23 @@ extensions = [
     "myst_parser",  # for markdown support
 ]
 
-templates_path = ['_templates']
+# Explicitly include .rst and .md files as source files
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.md': 'markdown',
+}
+
+include_patterns = [
+    "index.*",
+    "cip-????.md",
+]
+
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-
+# Warn on missing references
+nitpicky = True
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
-html_static_path = ['_static']
