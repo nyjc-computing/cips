@@ -4,9 +4,9 @@ Author: Ng Jun Siang
 Status: Proposed
 Created: 07-May-2025
 
-# What is a CIP?
+What is a CIP?
+==============
 
-Analogous to [PEPs for Python](https://peps.python.org/pep-0001), Campus Improvement Proposals (CIPs) are design documents that provide information or describe features of Campus.
+Analogous to `PEPs for Python <https://peps.python.org/pep-0001>`_, Campus Improvement Proposals (CIPs) are design documents that provide information or describe features of Campus.
 
 CIPs are the primary mechanism for capturing technical discussion and decisions from meetings, and through discourse.
-

@@ -32,20 +32,20 @@
 
           <div class="body" role="main">
             
-  <p>CIP: 2
+  <p>CIP: 3
 Title: Yapper: Event-Driven Message Broker
 Author: Ng Jun Siang
 Status: Active
 Created: 07-May-2025</p>
 <section id="the-problem-of-communication-scaling">
 <h1>The problem of communication scaling<a class="headerlink" href="#the-problem-of-communication-scaling" title="Link to this heading">¶</a></h1>
-<p>With a microservice architecture and an unknow number of first-party clients, Campus faces a <strong>communication scaling</strong> problem:</p>
+<p>With a microservice architecture and an unknown number of first-party clients, Campus faces a <strong>communication scaling</strong> problem:</p>
 <ul class="simple">
 <li><p>each client potentially modifies data,</p></li>
 <li><p>which other clients want to know about,</p></li>
-<li><p>and will attempt to find out by polling the microservice</p></li>
+<li><p>and will attempt to find out by polling the microservice.</p></li>
 </ul>
-<p>In the worst case, the clients (e.g. discord bots) are also data sources, leading to O(n²) increase in inter-client communication.</p>
+<p>In the worst case, the clients (e.g., discord bots) are also data sources, leading to O(n²) increase in inter-client communication.</p>
 <p>In the best case, clients are purely data consumers and microservices are data providers, with clients continually polling the microservices. The total polling frequency sees an O(n) increase in client-microservice communication.</p>
 </section>
 <section id="yapper-event-driven-message-broker">
@@ -54,7 +54,7 @@ Created: 07-May-2025</p>
 <p>Applications that emit events are known as <strong>publishers</strong>, while applications that listen for events are known as <strong>subscribers</strong>.</p>
 <p>Campus will use an <strong>event-driven architecture</strong> for microservices and first-party clients:</p>
 <ul class="simple">
-<li><p>microservices are purely publishers, emitting events for data changes</p></li>
+<li><p>microservices are purely publishers, emitting events for data changes,</p></li>
 <li><p>clients can be publishers and subscribers, emitting events and listening for them.</p></li>
 </ul>
 </section>
@@ -89,10 +89,6 @@ Created: 07-May-2025</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="cip-0001.html">What is a CIP?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cip-0002.html">Campus: The Digital College</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cip-0002.html#taxonomy-of-campus-data">Taxonomy of campus data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cip-0002.html#goals">Goals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cip-0002.html#principal-considerations">Principal considerations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cip-0002.html#structure">Structure</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The problem of communication scaling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#yapper-event-driven-message-broker">Yapper: Event-Driven Message Broker</a></li>
 </ul>
@@ -125,7 +121,7 @@ Created: 07-May-2025</p>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
-      <a href="_sources/cip-0003.md.txt"
+      <a href="_sources/cip-0003.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
