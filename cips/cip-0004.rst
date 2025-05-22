@@ -1,0 +1,123 @@
+CIP: 4
+Title: Unified Campus API Schema
+Author: Ng Jun Siang
+Status: Draft
+Created: 22-May-2025
+
+Abstract
+========
+
+This CIP defines the unified API schema used across the Campus platform. The schema ensures consistency and parity between all platform interfaces, including but not limited to HTTP API, Python client, Terminal CLI, and future interfaces. It also codifies the structure for event emission used in Campus's event-driven architecture. This design enables multi-interface operability, simplifies integration, and ensures predictable developer experience across subsystems.
+
+Motivation
+==========
+
+Campus operates as a modular superapp composed of independent sub-apps and services. To scale development across teams and platforms, we need a schema that ensures:
+
+- API parity across all access interfaces (HTTP, Python, CLI, future)
+- Predictable resource naming and access patterns
+- Standardized event emission for automation and traceability
+
+This schema abstracts individual API resource details and instead focuses on the rules and conventions that shape every API surface exposed by Campus.
+
+Specification
+=============
+
+The unified API schema defines the structural conventions for each layer:
+
+1. Verbs and Actions
+--------------------
+
+The API schema defines a canonical set of verbs that represent operations performed on resources. Each verb maps to one of the HTTP methods: ``GET``, ``POST``, ``PATCH``, ``PUT``, or ``DELETE``.
+
+For the HTTP API:
+
+- Common verbs (``new``, ``get``, ``list``, ``update``, ``delete``) infer the corresponding HTTP method and require no explicit verb in endpoint specification.
+- Non-common verbs must be explicitly declared.
+- A full list of verbs for Campus API will be maintained in the Campus API documentation.
+
+For Python and Terminal interfaces:
+
+- Verbs must always be explicitly specified.
+
+2. HTTP API
+-----------
+
+Each endpoint is defined by:
+
+- **HTTP method**: One of ``GET``, ``POST``, ``PATCH``, ``PUT``, ``DELETE``
+- **Path**: ``/resource``, ``/resource/<id>``, or ``/resource/<id>/subresource``
+- **Action semantics**: Aligned with canonical verbs
+
+3. Python Client
+----------------
+
+Each verb has a corresponding method in the Campus Python client:
+
+- **List**: ``.resource.list()``
+- **Create**: ``.resource.new()``
+- **Read**: ``.resource[<id>].get()``
+- **Update**: ``.resource[<id>].update()``
+- **Delete**: ``.resource[<id>].delete()``
+
+Resources and subresources are accessed via attribute-style chaining. Ids, where relevant, are specified as ``__getitem__()`` calls i.e. using ``[]`` syntax:
+
+- ``.resource[<id>].subresource.list()``
+
+4. Terminal CLI
+---------------
+
+The CLI mirrors the unified schema:
+
+- ``campus resource list``
+- ``campus resource new``
+- ``campus resource <id> get``
+- ``campus resource <id> update``
+- ``campus resource <id> delete``
+
+Subresources follow the same pattern, but with ids specified as positional arguments:
+
+- ``campus resource <id> subresource list``
+
+5. Event Emission
+-----------------
+
+All mutative operations (``POST``, ``PATCH``, ``PUT``, ``DELETE``) emit structured events. Events follow a namespaced format::
+
+    campus.<resource>.<action>
+    campus.<resource>.<subresource>.<action>
+
+Events do not include resource or subresource IDs in the event name. IDs are included in the event payload, and will be described in Campus API documentation.
+
+Examples (abstracted):
+
+- ``campus.resource.create``
+- ``campus.resource.update``
+- ``campus.resource.subresource.delete``
+
+These events are consumed by downstream services for automation, observability, and synchronization.
+
+Design Principles
+=================
+
+- **Parity**: All interfaces (HTTP, Python, CLI, future) expose the same conceptual operations.
+- **Predictability**: All resources and actions follow consistent patterns.
+- **Eventful**: All state changes are tracked through namespaced event emissions.
+- **Extensibility**: Subresources and new platforms are structurally supported without deviation.
+- **Minimal coupling**: The schema avoids hard-coding resource parameters in CIP definitions.
+
+Future Extensions
+=================
+
+- **OpenAPI/JSON Schema Generation**: Support for generating OpenAPI documentation automatically from CIP-compliant tables.
+- **Auth Scoping**: Schema-level declaration of access scopes per verb and resource.
+- **Deprecation Metadata**: Flagging and phasing out obsolete endpoints across all interfaces.
+- **Bulk Operations**: Pattern conventions for batch actions (e.g., ``POST /resources/bulk``).
+- **Event Payload Contracts**: Separate CIP to define payload schemas for emitted events.
+
+Rationale
+=========
+
+Having a single schema that drives API design across all Campus interfaces eliminates ambiguity, reduces onboarding friction, and ensures that the system remains coherent even as sub-apps and features proliferate.
+
+This CIP is intended as a foundational contract. All new services must adhere to this schema unless an explicit exemption is approved.
