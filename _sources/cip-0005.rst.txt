@@ -1,0 +1,55 @@
+CIP: 5
+Title: Circles and Sources
+Author: Ng Jun Siang
+Status: Draft
+Created: 22-May-2025
+
+Abstract
+========
+
+This proposal defines the concepts of **Circles** and **Sources** in the Campus system, their relationships, and the rules governing access and inheritance. It aims to formalize how resource access is granted and inherited within nested groups, without specifying implementation or access encoding details.
+
+Motivation
+==========
+
+Campus aims to provide structured, fine-grained, group-based access control across many integrated services. To support this, we introduce a model based on **Circles**, which represent nested groups, and **Sources**, which represent external or internal resources such as files, folders, repositories, or applications.
+
+This model must support:
+
+- Shared ownership of resources.
+- Recursive access inheritance.
+- Separation between user identity and access roles.
+- Declarative, predictable access behavior.
+
+Definitions
+===========
+
+- **Circle:** A logical group, which can be nested within another circle, forming a hierarchy. Each circle is uniquely identified and may have metadata such as name, tag, and description.
+- **User Circle:** A special circle owned by a single user. Every user is represented by exactly one user circle. User circles can own or access other circles.
+- **Source:** An external or internal data resource (e.g., Google Drive folder, GitHub repo, database, internal service). A source may be owned by one or more circles.
+- **Access:** A single value representing a circle's effective rights to a Source, defined per owning circle.
+
+Circle Structure and Rules
+=========================
+
+1. Circles form a tree of parent-child relationships.
+2. Each circle may have multiple subcircles (children).
+3. A circle may belong to multiple parent circles only if allowed by system policy.
+4. **Leaf-node circles** (i.e. circles with no subcircles) must include **at least one user-circle** with OWNER access.
+5. Access is inherited recursively from parent circles to their subcircles.
+6. A subcircle's effective access is the **maximum** access value it inherits from its parents.
+
+Source Ownership and Access Rules
+=================================
+
+1. A **source** is owned by one or more **owning circles**.
+2. Each owning circle defines access values for **its own subcircles** only. This access configuration is not shared across other owners.
+3. Subcircles cannot modify access rights for sources they do not own.
+4. **Access to a source is not globally defined** but is scoped to the circle that owns the source.
+5. A **source cannot be added to both a circle and its ancestor**. This constraint prevents conflicting inherited access paths and must be enforced at the structural level.
+6. Sources may be shared across multiple circles **if permitted by all current owners**.
+
+Summary
+=======
+
+CIP 5 introduces a flexible, recursive group-based access control model built on the primitives of **Circles** and **Sources**. It lays the groundwork for consistent access management in Campus, while explicitly avoiding implementation and schema decisions. This model allows ownership and access rights to be distributed cleanly across nested group structures, supporting both fine-grained control and scalable inheritance.
